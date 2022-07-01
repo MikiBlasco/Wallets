@@ -32,14 +32,37 @@ public class UserController {
 
     @PostMapping("/create-user")
     @CrossOrigin
-    public void createUser(@RequestBody User user, @AuthenticationPrincipal UserDetails userDetails){ userService.createUser(user, userDetails); }
+    public User createUser(@RequestBody User user, @AuthenticationPrincipal UserDetails userDetails){ return userService.createUser(user, userDetails); }
 
     @PatchMapping("/update-user/{id}")
     @CrossOrigin
-    public void updateUser(@RequestBody User user, @PathVariable long id, @AuthenticationPrincipal UserDetails userDetails){ userService.updateUser(user, id, userDetails); }
+    public User updateUser(@RequestBody User user, @PathVariable long id, @AuthenticationPrincipal UserDetails userDetails){
+        return userService.updateUser(user, id, userDetails);
+    }
 
-    @PostMapping ("/delete-user/{id}")
+    @PatchMapping("/update-name/{id}")
     @CrossOrigin
-    public void deleteUser(@PathVariable long id, @AuthenticationPrincipal UserDetails userDetails){ userService.deleteUser(id, userDetails); }
+    public User updateName(@RequestParam String name, @PathVariable long id, @AuthenticationPrincipal UserDetails userDetails){
+        return userService.updateName(name, id, userDetails);
+    }
+
+    @PatchMapping("/update-mail/{id}")
+    @CrossOrigin
+    public User updateMail(@RequestParam String mail, @PathVariable long id, @AuthenticationPrincipal UserDetails userDetails){
+        return userService.updateMail(mail, id, userDetails);
+    }
+
+    @DeleteMapping("/delete-user-wallets")
+    @CrossOrigin
+    public void deleteUserWallets(@PathVariable long id, UserDetails userDetails){
+         userService.deleteUserWallets(id, userDetails);
+    }
+
+
+    @DeleteMapping ("/delete-user/{id}")
+    @CrossOrigin
+    public void deleteUser(@PathVariable long id, @AuthenticationPrincipal UserDetails userDetails){
+        userService.deleteUser(id, userDetails);
+    }
 
 }

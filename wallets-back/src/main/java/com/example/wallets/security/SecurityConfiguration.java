@@ -30,13 +30,13 @@ public class SecurityConfiguration {
 
         http.authorizeRequests()
                 .mvcMatchers(HttpMethod.GET, "/all-users").permitAll()
-                .mvcMatchers(HttpMethod.GET, "/user/**").authenticated()
-                .mvcMatchers(HttpMethod.POST, "/create-user").authenticated()
-                .mvcMatchers(HttpMethod.PATCH, "/update-user/**").authenticated()
-                .mvcMatchers(HttpMethod.POST, "/delete-user/**").authenticated()
-                .mvcMatchers(HttpMethod.POST, "/add-wallet").authenticated()
-                .mvcMatchers(HttpMethod.PATCH, "/modify-amount/**").authenticated()
-                .anyRequest().authenticated();
+                .mvcMatchers(HttpMethod.GET, "/user/**").permitAll()
+                .mvcMatchers(HttpMethod.POST, "/create-user").permitAll()
+                .mvcMatchers(HttpMethod.PATCH, "/update-user/**").permitAll()
+                .mvcMatchers(HttpMethod.POST, "/delete-user/**").permitAll()
+                .mvcMatchers(HttpMethod.POST, "/add-wallet").permitAll()
+                .mvcMatchers(HttpMethod.PATCH, "/modify-amount/**").permitAll()
+                .anyRequest().permitAll();
 
         http.csrf().disable();
         return http.build();

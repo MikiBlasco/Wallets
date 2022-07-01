@@ -17,8 +17,8 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> authorities = new HashSet<>();
-        return authorities;
+        //Collection<GrantedAuthority> authorities = new HashSet<>();
+        return null;
     }
 
     @Override

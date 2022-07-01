@@ -18,22 +18,38 @@ public class WalletService {
     @Autowired WalletRepository walletRepository;
 
 
-    public void addWallet(WalletDTO walletDTO, UserDetails userDetails){
+    public Wallet addWallet(WalletDTO walletDTO, UserDetails userDetails){
         if(userRepository.findById(walletDTO.getUser_id()).isPresent()){
             User userFound = userRepository.findById(walletDTO.getUser_id()).get();
             Wallet newWallet = new Wallet(walletDTO.getCurrency_name(), walletDTO.getCurrency_amount(), userFound);
             walletRepository.save(newWallet);
             userRepository.save(userFound);
+            return newWallet;
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
 
-    public void modifyAmount(long id, double amount, UserDetails userDetails){
+    public Wallet modifyAmount(long id, double amount, UserDetails userDetails){
         if(walletRepository.findById(id).isPresent()){
             Wallet walletToUpdate = walletRepository.findById(id).get();
             walletToUpdate.setCurrency_amount(amount);
             walletRepository.save(walletToUpdate);
+            return walletToUpdate;
+
+        } else {
+            throw  new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+    }
+
+    public void deleteWallet(long id, UserDetails userDetails){
+        if(walletRepository.findById(id).isPresent()){
+            Wallet walletToDelete = walletRepository.findById(id).get();
+            walletRepository.delete(walletToDelete);
+
+        } else {
+            throw  new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
 

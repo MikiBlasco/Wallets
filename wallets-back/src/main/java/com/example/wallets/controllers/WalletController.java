@@ -17,10 +17,20 @@ public class WalletController {
 
     @PostMapping ("/add-wallet")
     @CrossOrigin
-    public void addWalletToUserPortfolio(@RequestBody WalletDTO walletDTO, @AuthenticationPrincipal UserDetails userDetails){ walletService.addWallet(walletDTO, userDetails); }
+    public Wallet addWalletToUserPortfolio(@RequestBody WalletDTO walletDTO, @AuthenticationPrincipal UserDetails userDetails){
+        return walletService.addWallet(walletDTO, userDetails);
+    }
 
     @PatchMapping ("/modify-amount/{id}")
     @CrossOrigin
-    public void modifyWalletAmount(@PathVariable long id, double amount, @AuthenticationPrincipal UserDetails userDetails){ walletService.modifyAmount(id, amount, userDetails); }
+    public Wallet modifyWalletAmount(@PathVariable long id, @RequestParam double amount, @AuthenticationPrincipal UserDetails userDetails){
+        return walletService.modifyAmount(id, amount, userDetails);
+    }
+
+    @DeleteMapping ("/delete-wallet/{id}")
+    @CrossOrigin
+    public void deleteWallet(@PathVariable long id, @AuthenticationPrincipal UserDetails userDetails){
+        walletService.deleteWallet(id, userDetails);
+    }
 
 }
