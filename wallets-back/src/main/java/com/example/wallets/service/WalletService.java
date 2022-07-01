@@ -7,6 +7,7 @@ import com.example.wallets.repositories.UserRepository;
 import com.example.wallets.repositories.WalletRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -17,7 +18,7 @@ public class WalletService {
     @Autowired WalletRepository walletRepository;
 
 
-    public void addWallet(WalletDTO walletDTO){
+    public void addWallet(WalletDTO walletDTO, UserDetails userDetails){
         if(userRepository.findById(walletDTO.getUser_id()).isPresent()){
             User userFound = userRepository.findById(walletDTO.getUser_id()).get();
             Wallet newWallet = new Wallet(walletDTO.getCurrency_name(), walletDTO.getCurrency_amount(), userFound);
@@ -28,7 +29,7 @@ public class WalletService {
         }
     }
 
-    public void modifyAmount(long id, double amount){
+    public void modifyAmount(long id, double amount, UserDetails userDetails){
         if(walletRepository.findById(id).isPresent()){
             Wallet walletToUpdate = walletRepository.findById(id).get();
             walletToUpdate.setCurrency_amount(amount);

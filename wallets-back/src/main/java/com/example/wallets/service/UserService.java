@@ -6,6 +6,7 @@ import com.example.wallets.repositories.UserRepository;
 import com.example.wallets.repositories.WalletRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class UserService {
        return userRepository.findAll();
     }
 
-    public User getUserById(long id){
+    public User getUserById(long id, UserDetails userDetails){
         if(userRepository.findById(id).isPresent()){
             return userRepository.findById(id).get();
         } else {
@@ -33,7 +34,7 @@ public class UserService {
         }
     }
 
-    public void updateUser(User user, long id){
+    public void updateUser(User user, long id, UserDetails userDetails){
         if(userRepository.findById(id).isPresent()){
             User userToUpdate = userRepository.findById(id).get();
             userToUpdate.setMail(user.getMail());
@@ -44,18 +45,16 @@ public class UserService {
 
     }
 
-    public void deleteUser(long id){
+    public void deleteUser(long id, UserDetails userDetails){
         if(userRepository.findById(id).isPresent()){
             User userToDelete = userRepository.findById(id).get();
             userRepository.delete(userToDelete);
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-
-
     }
 
-    public User createUser(User user){
+    public User createUser(User user, UserDetails userDetails){
         User newUser = new User(user.getName(), user.getMail(), passwordEncoder.encode(user.getPassword()));
         userRepository.save(newUser);
         return newUser;
