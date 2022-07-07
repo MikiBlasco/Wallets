@@ -1,63 +1,28 @@
 <template>
   <div class="home">
     
-    <div class="user"
-    v-for="user in users" 
-    :key="user.id" 
-    >  
-    User
-    <ul class="user-info">
-      <li>Name: {{ user.name }}</li>
-      <li>Email:{{ user.mail }}</li>
-      <router-link :to="`/user/${user.id}`">
-      See wallets
-      </router-link>
-
-     
-    </ul>
-      <div 
-      v-for="wallet in user.walletList"
-      :key="wallet.id" 
-      >
-      <ul class="wallet">
-        {{ wallet.currency_name }} Wallet:
-        <li> Amount: {{ wallet.currency_amount }} {{ wallet.currency_name }} </li>
-        <li> Value USD: ??? </li>
-      </ul>
-
-      </div> 
-
-    </div>
+  <user-component></user-component>
+  <hr/>
+  <user-form-component></user-form-component>
+  
 
   </div>
 </template>
 
 <script lang="ts">
-//import { Options, Vue } from 'vue-class-component';
-import { defineComponent, onMounted } from 'vue';
-import { UserService } from "../services/UserService"
-//import UserComponent from '@/components/UserComponent.vue';
+import { defineComponent} from 'vue';
+import  UserFormComponent  from "../components/UserFormComponent.vue"
+import UserComponent from '../components/UserComponent.vue';
 
 
 export default defineComponent({
 
   name: "HomeView",
 
-  setup () {
-
-    const service = new UserService()
-    const users = service.getUsers()
-    const user = service.getUser()
-
-    onMounted(async () => {
-      await service.fetchAll()
-    })
-
-
-    return {
-      users
-    }
-  }
+  components: {
+    UserComponent,
+    UserFormComponent,
+  },
   
 })
 
@@ -79,7 +44,7 @@ export default defineComponent({
 }
 
 .user-info{
-  border: 1px solid blue;
+  background-color: lemonchiffon;
 }
 
 .wallet{

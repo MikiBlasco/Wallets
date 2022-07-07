@@ -1,28 +1,37 @@
 <template>
-
-<div>
-    <h1> {{ saludo.toLocaleUpperCase() }} </h1>
-    <button onclick="getUsers()">Show Users</button>
-</div>
-
+  <div>
+    <div class="user" v-for="user in users" :key="user.id">
+      <ul class="user-info">
+        <li>Name: {{ user.name }}</li>
+        <li>Email:{{ user.mail }}</li>
+        <router-link :to="`/user/${user.id}`"> See wallets </router-link>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
+import { UserService } from '@/services/UserService';
+import { defineComponent, onMounted } from 'vue';
 
-export default {
+export default defineComponent ({
+    name: 'UserComponent',   
 
-    
-    data(){
-        return {
-            saludo: "saludo",
-            users: null,
-        }
-    },
-    
+    setup () {
 
-}
+    const service = new UserService()
+    const users = service.getUsers()
+
+    onMounted(async () => {
+      await service.fetchAll()
+    })
+
+    return {
+      users,
+    }
+  },
+
+});
 </script>
 
-<style>
-
-</style>
+<style></style>
