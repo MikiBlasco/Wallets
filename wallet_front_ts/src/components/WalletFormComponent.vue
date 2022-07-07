@@ -9,18 +9,19 @@
       <option value="ETH">ETH</option>
       <option value="ADA">ADA</option>
       </select>
-
     </div>
+    <br>
     <div>
       <label for="amount">Amount: </label>
       <input type="number" v-model="amount" placeholder="amount" >
+    
     </div>
+   </div>
 
-    <hr>
+   <div class="addWallet">
+     <button v-on:click="addWallet()">Add Wallet</button>
 
- </div>
-
- <button v-on:click="addWallet()">Add Wallet</button>
+   </div>
 </template>
 
 <script lang="ts">
@@ -70,5 +71,20 @@ export default defineComponent ({
 </script>
 
 <style>
+
+.form-group{
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center; 
+
+}
+
+.addWallet{
+  display: flex;
+  align-content: center;
+  margin: 5px;
+  
+}
 
 </style>

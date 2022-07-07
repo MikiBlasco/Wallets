@@ -1,11 +1,15 @@
 <template>
   <div class="home">
     
-  <user-component></user-component>
-  <hr/>
-  <user-form-component></user-form-component>
-  
+    <div class="userForm">
+      <user-form-component></user-form-component>
+    </div>
 
+    <div class="users">      
+      <user-component></user-component>      
+    </div>
+
+    
   </div>
 </template>
 
@@ -33,24 +37,46 @@ export default defineComponent({
 .home{
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  align-items:flex-start;
+  margin: 10px;
+  width: 400px;
 }
 
-.user{
-  border: 1px solid black;
-  padding: 5px;
+.users{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px rgb(245, 234, 234) solid;
+  border-radius: 8px;
   margin: 5px;
 }
 
+.userForm {
+  border: 1px grey solid;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 5px;
+
+}
+
+.user{
+  padding: 5px;
+  margin: 5px;
+  border-radius: 8px;
+  background-color: rgb(208, 208, 230);
+  text-decoration: none;
+}
+
 .user-info{
-  background-color: lemonchiffon;
+  background-color: rgba(253, 253, 253, 0.411);
+  border-radius: 8px;
 }
 
 .wallet{
-  background-color: blanchedalmond;
-  border: 1px solid grey;
+  background-color: rgb(245, 243, 240);
   border-radius: 8px;
+
 }
 
 

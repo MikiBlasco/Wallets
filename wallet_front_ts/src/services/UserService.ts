@@ -74,6 +74,26 @@ export class UserService {
 
   }
 
+  async deleteUser(id: any): Promise<void>{
+
+    try{
+        const requestOptions = {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json"  },
+        };
+    const url = `http://localhost:4000/delete-user/${id}`
+    const response = await fetch(url, requestOptions)
+    const json  = await response.json()
+    this.user.value = await json
+
+    } catch (error) {
+
+        console.log(error)
+    }
+   
+
+}
+
 
  
    

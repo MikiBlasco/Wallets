@@ -13,12 +13,12 @@
       <label for="password">password: </label>
       <input type="text" v-model="password" placeholder="Your mail" >
     </div>
-    <hr>
 
  </div>
+<div class="addUser">
+  <button class="" v-on:click="addUser()">Add User</button>
+</div>
 
-
- <button v-on:click="addUser()">Add User</button>
 
 
 </template>
@@ -71,4 +71,20 @@ export default defineComponent ({
 });
 </script>
 
-<style></style>
+<style>
+
+.form-group{
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center; 
+
+}
+
+.addUser{
+  display: flex;
+  align-content: center;
+  margin: 5px;
+  
+}
+</style>
