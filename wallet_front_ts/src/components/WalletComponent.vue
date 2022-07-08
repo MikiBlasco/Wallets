@@ -9,7 +9,7 @@
         v-for="(wallet, index) in user.walletList"
         :key="wallet.id"
       >
-      
+       <WalletCardComponent></WalletCardComponent>
         <ul class="wallet">
           <div style="font-weight: bold">
             {{ wallet.currency_name }}
@@ -18,14 +18,18 @@
               Details
             </button>
           </div>
-
+          
           <ul v-if="showWallet[index]">
             <li>
               Amount: {{ wallet.currency_amount }} {{ wallet.currency_name }}
               <button class="button3" v-on:click="showEdit(index)"> Edit </button>
+              
               <div v-if="showEditor[index]">
                 <input style="width:50px; font-size:10px;"  type="number" v-model="amount" placeholder="new amount"> 
-                <button class="button3" v-on:click="editAmount(amount, wallet)" style="background-color: black; color:white">save</button>
+                <button class="button3" v-on:click="editAmount(amount, wallet)" 
+                style="background-color: black; color:white">
+                save
+                </button>
 
 
               </div>
@@ -49,33 +53,31 @@
 <script lang="ts">
 import { UserService } from "@/services/UserService";
 import { WalletService } from "@/services/WalletService";
-import { defineComponent, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
-import WalletCardComponent from "./components/WalletCardComponent.vue"
-import WalletFormComponent from "./WalletFormComponent.vue";
+import WalletCardComponent from "./WalletCardComponent.vue";
 
-export default defineComponent({
+
+export default {
     name: "WalletComponent",
-
-    methods: {
-        showWalletDetails(i: number) {
-            if (this.showWallet[i])
-                this.showWallet[i] = false;
-            else
-                this.showWallet[i] = true;
-        },
-        showEdit(i: number) {
-            if (this.showEditor[i])
-                this.showEditor[i] = false;
-            else
-                this.showEditor[i] = true;
-        },
-        
-        editAmount(amount: number, wallet: any) {
-            const walletService = new WalletService();
-            walletService.editAmount(amount, wallet.id);
-        },
-    },
+    // methods: {
+    //     showWalletDetails(i: number) {
+    //         if (this.showWallet[i])
+    //             this.showWallet[i] = false;
+    //         else
+    //             this.showWallet[i] = true;
+    //     },
+    //     showEdit(i: number) {
+    //         if (this.showEditor[i])
+    //             this.showEditor[i] = false;
+    //         else
+    //             this.showEditor[i] = true;
+    //     },
+    //     editAmount(amount: number, wallet: any) {
+    //         const walletService = new WalletService();
+    //         walletService.editAmount(amount, wallet.id);
+    //     },
+    // },
     setup() {
         const service = new UserService();
         const walletService = new WalletService();
@@ -90,12 +92,29 @@ export default defineComponent({
             service.fetchById(id);
             isLoading.value = false;
         });
-
-       function deleteWallet(wallet: any) {
+        function deleteWallet(wallet: any) {
             const walletService = new WalletService();
-            walletService.deleteWallet(wallet.id);
+            walletService.deleteWallet(wallet.id).then(() => {
+                service.fetchById(id);
+            });
         }
-        
+        function showWalletDetails(i: number) {
+            if (showWallet.value[i])
+                showWallet.value[i] = false;
+            else
+                showWallet.value[i] = true;
+        }
+        function showEdit(i: number) {
+            if (showEditor.value[i])
+                showEditor.value[i] = false;
+            else
+                showEditor.value[i] = true;
+        }
+        function editAmount(amount: number, wallet: any) {
+            walletService.editAmount(amount, wallet.id).then(() => {
+                service.fetchById(id);
+            });
+        }
         return {
             user,
             isLoading,
@@ -103,11 +122,14 @@ export default defineComponent({
             showEditor,
             amount,
             info,
-            deleteWallet
+            deleteWallet,
+            showWalletDetails,
+            showEdit,
+            editAmount
         };
     },
-
-});
+    components: { WalletCardComponent }
+};
 </script>
 
 <style></style>

@@ -24,44 +24,58 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from 'vue';
+import { defineComponent, onMounted, ref, Ref } from 'vue';
 import { UserService } from '@/services/UserService';
 import  CreateUserDto  from "../models/CreateUserDTO"
 
-export default defineComponent ({
+export default {
     name: 'userForm',
    
 
-        methods: {
+    //     methods: {
 
-      addUser(){
-        const service = new UserService();
-        const name = this.name;
-        const mail = this.mail;
-        const password = this.password;
-        console.log(name, mail, password)
+    //   addUser(){
+    //     const service = new UserService();
+    //     const name = this.name;
+    //     const mail = this.mail;
+    //     const password = this.password;
+    //     console.log(name, mail, password)
 
-        const newUser = new CreateUserDto (name, mail, password)
-        console.log(newUser)
-        service.createUser(newUser)
+    //     const newUser = new CreateUserDto (name, mail, password)
+    //     console.log(newUser)
+    //     service.createUser(newUser)
         
-      }
-    },
+    //   }
+    // },
 
     setup () {
 
-       onMounted(async () => {
-    })
+        const service = new UserService();
+        const name = ref('')
+        const mail = ref('')
+        const password = ref('')
+ 
+       function addUser(){
+    
+        console.log(name, mail, password)
+
+        const newUser = new CreateUserDto (name.value, mail.value, password.value)
+        console.log(newUser)
+        service.createUser(newUser).then(()=>
+        window.location.reload());      
+        
+      }
     
 
     return {
-        name: '',
-        mail: '',
-        password: '',
+        name,
+        mail,
+        password,
+        addUser
       }  
 
     },
-});
+};
 
 </script>
 

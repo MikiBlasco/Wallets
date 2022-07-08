@@ -1,27 +1,25 @@
 <template>
    
-   <h1>{{ test }}</h1>
+   <h1>Hola</h1>
 
   
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from "vue"
 
-export default defineComponent ({
+
+export default {
  
  name : "walletCard",
- 
 
- data () {
-   return {
-    test:  'test2'
-   }
-
+ setup() {
+    
  }
 
+ 
 
-});
+ };
+
 </script>
 
 <style>

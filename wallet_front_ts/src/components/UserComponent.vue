@@ -17,21 +17,13 @@ import { UserService } from '@/services/UserService';
 import { defineComponent, onMounted } from 'vue';
 import { WalletService } from '../services/WalletService';
 
-export default defineComponent ({
+export default {
     name: 'UserComponent',  
-    
-    methods: {
 
-    deleteUser(user: any) {
-      const walletService = new UserService();
-      walletService.deleteUser(user.id);
-    },
-  },
 
     setup () {
 
     const service = new UserService()
-    const walletService = new WalletService()
     const users = service.getUsers()
 
     onMounted(async () => {
@@ -39,12 +31,20 @@ export default defineComponent ({
       //await walletService.getUsdPrice2();
     })
 
+     function deleteUser(user: any) {
+       service.deleteUser(user.id).
+       then(()=>{
+        service.fetchAll();
+       })
+    }
+
     return {
       users,
+      deleteUser
     }
   },
 
-});
+};
 </script>
 
 <style></style>

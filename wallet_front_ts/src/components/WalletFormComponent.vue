@@ -35,6 +35,8 @@ import { UserService } from '@/services/UserService';
 export default defineComponent ({
     name: 'walletForm',
 
+    
+
     methods: {
 
         addWallet(){
@@ -47,8 +49,10 @@ export default defineComponent ({
 
             const newWallet = new AddWalletDTO(currency, amount, userId);
             console.log(newWallet)
-            walletService.addWallet(newWallet);
-            walletService.getWallets();
+            walletService.addWallet(newWallet).then(()=>{
+               window.location.reload();
+            })
+            
 
         
         }
