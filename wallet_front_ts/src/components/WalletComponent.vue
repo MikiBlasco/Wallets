@@ -1,4 +1,5 @@
 <template>
+
   <div>
     <div v-if="!isLoading">
       {{ user.name }} wallets
@@ -8,6 +9,7 @@
         v-for="(wallet, index) in user.walletList"
         :key="wallet.id"
       >
+      
         <ul class="wallet">
           <div style="font-weight: bold">
             {{ wallet.currency_name }}
@@ -49,59 +51,62 @@ import { UserService } from "@/services/UserService";
 import { WalletService } from "@/services/WalletService";
 import { defineComponent, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
+import WalletCardComponent from "./components/WalletCardComponent.vue"
+import WalletFormComponent from "./WalletFormComponent.vue";
 
 export default defineComponent({
-  name: "WalletComponent",
+    name: "WalletComponent",
 
-  methods: {
-    showWalletDetails(i: number) {
-      if (this.showWallet[i]) this.showWallet[i] = false;
-      else this.showWallet[i] = true;     
+    methods: {
+        showWalletDetails(i: number) {
+            if (this.showWallet[i])
+                this.showWallet[i] = false;
+            else
+                this.showWallet[i] = true;
+        },
+        showEdit(i: number) {
+            if (this.showEditor[i])
+                this.showEditor[i] = false;
+            else
+                this.showEditor[i] = true;
+        },
+        
+        editAmount(amount: number, wallet: any) {
+            const walletService = new WalletService();
+            walletService.editAmount(amount, wallet.id);
+        },
+    },
+    setup() {
+        const service = new UserService();
+        const walletService = new WalletService();
+        const user = service.getUser();
+        const info = walletService.getInfo();
+        const isLoading = ref<boolean>(true);
+        const showWallet = ref<Array<boolean>>([]);
+        const showEditor = ref<Array<boolean>>([]);
+        const amount = 0;
+        const { id } = useRoute().params;
+        onMounted(async () => {
+            service.fetchById(id);
+            isLoading.value = false;
+        });
+
+       function deleteWallet(wallet: any) {
+            const walletService = new WalletService();
+            walletService.deleteWallet(wallet.id);
+        }
+        
+        return {
+            user,
+            isLoading,
+            showWallet,
+            showEditor,
+            amount,
+            info,
+            deleteWallet
+        };
     },
 
-    showEdit(i: number) {
-      if (this.showEditor[i]) this.showEditor[i] = false;
-      else this.showEditor[i] = true;
-    },
-
-    deleteWallet(wallet: any) {
-      const walletService = new WalletService();
-      walletService.deleteWallet(wallet.id);
-    },
-
-    editAmount(amount: number, wallet: any) {
-      const walletService = new WalletService();
-      walletService.editAmount(amount, wallet.id);
-      
-    },
-  },
-
-  setup() {
-    const service = new UserService();
-    const walletService = new WalletService();
-    const user = service.getUser();
-    const info = walletService.getInfo();
-    const isLoading = ref<boolean>(true);
-    const showWallet = ref<Array<boolean>>([]);
-    const showEditor = ref<Array<boolean>>([]);
-    const amount = 0;
-    const { id } = useRoute().params;
-
-    onMounted(async () => {
-      service.fetchById(id);
-      // await walletService.getUsdPrice();
-      isLoading.value = false;
-    });
-
-    return {
-      user,
-      isLoading,
-      showWallet,
-      showEditor,
-      amount,
-      info,
-    };
-  },
 });
 </script>
 

@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="users-container">
+    <h4 style="text-align: center">Users</h4>
     <div class="user" v-for="user in users" :key="user.id">
       <ul class="user-info">
         <li>Name: {{ user.name }}</li>
@@ -14,6 +15,7 @@
 <script lang="ts">
 import { UserService } from '@/services/UserService';
 import { defineComponent, onMounted } from 'vue';
+import { WalletService } from '../services/WalletService';
 
 export default defineComponent ({
     name: 'UserComponent',  
@@ -29,10 +31,12 @@ export default defineComponent ({
     setup () {
 
     const service = new UserService()
+    const walletService = new WalletService()
     const users = service.getUsers()
 
     onMounted(async () => {
       await service.fetchAll()
+      //await walletService.getUsdPrice2();
     })
 
     return {

@@ -58,32 +58,25 @@ export default defineComponent ({
         name: '',
         mail: '',
         password: '',
-      }
-
-  
+      }  
 
     },
-
-  
-    
-  
-
 });
+
 </script>
 
 <style>
 
 .form-group{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-content: center;
   justify-content: center; 
 
 }
 
 .addUser{
-  display: flex;
-  align-content: center;
+
   margin: 5px;
   
 }

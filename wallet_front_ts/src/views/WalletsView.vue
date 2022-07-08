@@ -1,4 +1,5 @@
 <template>
+  <navbar-component></navbar-component>
   <div class="wallets">
     <div class="walletForm">
       <wallet-form-component></wallet-form-component>
@@ -13,6 +14,8 @@
 import { defineComponent } from "vue";
 import WalletFormComponent from "../components/WalletFormComponent.vue";
 import WalletComponent from "../components/WalletComponent.vue";
+import NavbarComponent from "../components/NavbarComponent.vue";
+import WalletCardComponent from "../components/WalletCardComponent.vue"
 
 export default defineComponent({
   name: "WalletView",
@@ -20,7 +23,10 @@ export default defineComponent({
   components: {
     WalletComponent,
     WalletFormComponent,
-  },
+    NavbarComponent,
+    WalletCardComponent
+
+},
 });
 </script>
 

@@ -1,4 +1,6 @@
 <template>
+<navbar-component></navbar-component>
+ 
   <div class="home">
     
     <div class="userForm">
@@ -10,6 +12,8 @@
     </div>
 
     
+
+    
   </div>
 </template>
 
@@ -17,6 +21,8 @@
 import { defineComponent} from 'vue';
 import  UserFormComponent  from "../components/UserFormComponent.vue"
 import UserComponent from '../components/UserComponent.vue';
+import NavbarComponentVue from "../components/NavbarComponent.vue";
+import NavbarComponent from '../components/NavbarComponent.vue';
 
 
 export default defineComponent({
@@ -26,7 +32,9 @@ export default defineComponent({
   components: {
     UserComponent,
     UserFormComponent,
-  },
+    NavbarComponentVue,
+    NavbarComponent
+},
   
 })
 
@@ -57,6 +65,8 @@ export default defineComponent({
   border-radius: 8px;
   padding: 10px;
   margin: 5px;
+  display:flex;
+  flex-direction: column;
 
 }
 

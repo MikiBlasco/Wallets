@@ -29,6 +29,7 @@ import { defineComponent, onMounted } from 'vue';
 import { WalletService } from '../services/WalletService';
 import AddWalletDTO from '../models/AddWalletDTO';
 import { useRoute } from 'vue-router';
+import { UserService } from '@/services/UserService';
 
 
 export default defineComponent ({
@@ -37,7 +38,7 @@ export default defineComponent ({
     methods: {
 
         addWallet(){
-            const service = new WalletService();
+            const walletService = new WalletService();
             const currency = this.currency;
             const amount = this.amount;
             const userId = this.id
@@ -46,7 +47,9 @@ export default defineComponent ({
 
             const newWallet = new AddWalletDTO(currency, amount, userId);
             console.log(newWallet)
-            service.addWallet(newWallet);
+            walletService.addWallet(newWallet);
+            walletService.getWallets();
+
         
         }
      },
