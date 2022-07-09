@@ -9,7 +9,7 @@
         v-for="(wallet, index) in user.walletList"
         :key="wallet.id"
       >
-       <WalletCardComponent :wallet="wallet" ></WalletCardComponent>
+       <!-- <WalletCardComponent :wallet="wallet" ></WalletCardComponent> -->
         <ul class="wallet">
           <div style="font-weight: bold">
             {{ wallet.currency_name }}
