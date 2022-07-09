@@ -1,6 +1,6 @@
 <template>
    
-   <h1>Hola</h1>
+   <h4>{{wallet}}</h4>
 
   
 </template>
@@ -11,12 +11,9 @@
 export default {
  
  name : "walletCard",
-
- setup() {
-    
- }
-
- 
+ props: {
+   wallet: Object,
+ },
 
  };
 

@@ -9,7 +9,7 @@
         v-for="(wallet, index) in user.walletList"
         :key="wallet.id"
       >
-       <WalletCardComponent></WalletCardComponent>
+       <WalletCardComponent :wallet="wallet" ></WalletCardComponent>
         <ul class="wallet">
           <div style="font-weight: bold">
             {{ wallet.currency_name }}
@@ -60,24 +60,8 @@ import WalletCardComponent from "./WalletCardComponent.vue";
 
 export default {
     name: "WalletComponent",
-    // methods: {
-    //     showWalletDetails(i: number) {
-    //         if (this.showWallet[i])
-    //             this.showWallet[i] = false;
-    //         else
-    //             this.showWallet[i] = true;
-    //     },
-    //     showEdit(i: number) {
-    //         if (this.showEditor[i])
-    //             this.showEditor[i] = false;
-    //         else
-    //             this.showEditor[i] = true;
-    //     },
-    //     editAmount(amount: number, wallet: any) {
-    //         const walletService = new WalletService();
-    //         walletService.editAmount(amount, wallet.id);
-    //     },
-    // },
+    components: { WalletCardComponent },
+    
     setup() {
         const service = new UserService();
         const walletService = new WalletService();
@@ -88,33 +72,41 @@ export default {
         const showEditor = ref<Array<boolean>>([]);
         const amount = 0;
         const { id } = useRoute().params;
+
+
+
         onMounted(async () => {
             service.fetchById(id);
             isLoading.value = false;
         });
+
         function deleteWallet(wallet: any) {
             const walletService = new WalletService();
             walletService.deleteWallet(wallet.id).then(() => {
                 service.fetchById(id);
             });
         }
+
         function showWalletDetails(i: number) {
             if (showWallet.value[i])
                 showWallet.value[i] = false;
             else
                 showWallet.value[i] = true;
         }
+
         function showEdit(i: number) {
             if (showEditor.value[i])
                 showEditor.value[i] = false;
             else
                 showEditor.value[i] = true;
         }
+
         function editAmount(amount: number, wallet: any) {
             walletService.editAmount(amount, wallet.id).then(() => {
                 service.fetchById(id);
             });
         }
+
         return {
             user,
             isLoading,
@@ -128,7 +120,7 @@ export default {
             editAmount
         };
     },
-    components: { WalletCardComponent }
+    
 };
 </script>
 
